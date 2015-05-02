@@ -12,6 +12,7 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.instance.RemovePercentage;
+import weka.core.neighboursearch.LinearNNSearch;
 /**
  *
  * @author daviddonley
@@ -23,7 +24,7 @@ public class Classifier {
      */
     public static void main(String[] args) throws Exception {
         
-        
+
     DataSource source = new DataSource("/Users/daviddonley/Desktop/iris.csv");
     Instances data = source.getDataSet();
     
@@ -35,27 +36,29 @@ public class Classifier {
     
     //Split the data into 70 percent for the training.
     RemovePercentage seventy = new RemovePercentage();
-    seventy.setPercentage(70);
+    seventy.setPercentage(30);
     seventy.setInputFormat(data);
     //Assign the seventy percent of the data to the instance
     Instances training = Filter.useFilter(data, seventy);
     
     //Split the other data into the remainding percent
-    seventy.setInvertSelection(true);
+    seventy.setPercentage(70);
     seventy.setInputFormat(data);
+    //seventy.setInvertSelection(true);
+    //seventy.setInputFormat(data);
     //Assign the 30 persent to the testing
     Instances test = Filter.useFilter(data, seventy);
     
-    //Call the HardCodedClasifier
-    HardCodedClassifier hardcode = new HardCodedClassifier();
-    hardcode.buildClassifier(training);
+    //Call the KNearestClassifier
+    
+    KNearest knn = new KNearest(1);
+    knn.buildClassifier(training);
     
     //Use Evaluation to evaluate the training
     Evaluation evaluate = new Evaluation(training);
-    evaluate.evaluateModel(hardcode, test);
-    
+    evaluate.evaluateModel(knn, test);
     //Print the results
-    System.out.println(evaluate.toSummaryString("\nDATA RESULTS\n", true));
+    System.out.println(evaluate.toSummaryString("\nDATA RESULTS\n", false));
     }
     
 }
