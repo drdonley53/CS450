@@ -13,6 +13,7 @@ import weka.core.converters.ConverterUtils.DataSource;
 import weka.filters.Filter;
 import weka.filters.unsupervised.instance.RemovePercentage;
 import weka.core.neighboursearch.LinearNNSearch;
+import weka.core.neighboursearch.NearestNeighbourSearch;
 /**
  *
  * @author daviddonley
@@ -46,17 +47,18 @@ public class Classifier {
     seventy.setInputFormat(data);
     //seventy.setInvertSelection(true);
     //seventy.setInputFormat(data);
+    
     //Assign the 30 persent to the testing
     Instances test = Filter.useFilter(data, seventy);
     
     //Call the KNearestClassifier
     
-    KNearest knn = new KNearest(1);
-    knn.buildClassifier(training);
+    ID3 id3 = new ID3();
+    id3.buildClassifier(training);
     
     //Use Evaluation to evaluate the training
     Evaluation evaluate = new Evaluation(training);
-    evaluate.evaluateModel(knn, test);
+    evaluate.evaluateModel(id3, test);
     //Print the results
     System.out.println(evaluate.toSummaryString("\nDATA RESULTS\n", false));
     }
