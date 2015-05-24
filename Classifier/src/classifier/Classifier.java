@@ -51,14 +51,12 @@ public class Classifier {
     //Assign the 30 persent to the testing
     Instances test = Filter.useFilter(data, seventy);
     
-    //Call the KNearestClassifier
-    
-    ID3 id3 = new ID3();
-    id3.buildClassifier(training);
+    MultiPrecep precep = new MultiPrecep();
+    precep.buildClassifier(training);
     
     //Use Evaluation to evaluate the training
     Evaluation evaluate = new Evaluation(training);
-    evaluate.evaluateModel(id3, test);
+    evaluate.evaluateModel(precep, test);
     //Print the results
     System.out.println(evaluate.toSummaryString("\nDATA RESULTS\n", false));
     }
