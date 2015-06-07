@@ -37,13 +37,13 @@ public class Classifier {
     
     //Split the data into 70 percent for the training.
     RemovePercentage seventy = new RemovePercentage();
-    seventy.setPercentage(30);
+    seventy.setPercentage(70);
     seventy.setInputFormat(data);
     //Assign the seventy percent of the data to the instance
     Instances training = Filter.useFilter(data, seventy);
     
     //Split the other data into the remainding percent
-    seventy.setPercentage(70);
+    seventy.setPercentage(30);
     seventy.setInputFormat(data);
     //seventy.setInvertSelection(true);
     //seventy.setInputFormat(data);
